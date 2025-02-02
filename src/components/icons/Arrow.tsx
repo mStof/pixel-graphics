@@ -1,0 +1,11 @@
+import * as React from "react";
+import Svg, { SvgProps, Path } from "react-native-svg";
+const SvgComponent = (props: SvgProps) => (
+  <Svg width={18} height={16} fill="none" {...props}>
+    <Path
+      fill="#030027"
+      d="M17 9a1 1 0 1 0 0-2v2ZM.293 7.293a1 1 0 0 0 0 1.414l6.364 6.364a1 1 0 0 0 1.414-1.414L2.414 8l5.657-5.657A1 1 0 0 0 6.657.93L.293 7.293ZM17 7H1v2h16V7Z"
+    />
+  </Svg>
+);
+export { SvgComponent as ArrowIcon };
