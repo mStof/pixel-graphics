@@ -5,5 +5,6 @@ import { LeftArrow } from "./LeftArrow";
 import { MenuIcon } from "./MenuIcon";
 import { RightArrow } from "./RightArrow";
 import { SocialIcon } from "./SocialIcon";
+import { CloseIcon } from "./Close";
 
-export { AddIcon, HomeIcon, MenuIcon, SocialIcon, ArrowIcon, LeftArrow, RightArrow };
+export { AddIcon, HomeIcon, MenuIcon, SocialIcon, ArrowIcon, LeftArrow, RightArrow, CloseIcon };

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "modal",
+  initialRouteName: "(tabs)",
 };
 SplashScreen.preventAutoHideAsync();
 
@@ -28,9 +28,9 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }} initialRouteName="modal">
+    <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="modal" options={{ animation: "slide_from_bottom" }} />
+      <Stack.Screen name="Add" options={{ animation: "slide_from_bottom" }} />
     </Stack>
   );
 }

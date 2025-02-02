@@ -18,8 +18,8 @@ module.exports = {
         49: "12.25rem",
       },
       fontFamily: {
-        "Nunito-regular": ["Nunito_300Light"],
-        "Nunito-light": ["Nunito_400Regular"],
+        "Nunito-light": ["Nunito_300Light"],
+        "Nunito-regular": ["Nunito_400Regular"],
         "Nunito-bold": ["Nunito_700Bold"],
       },
     },

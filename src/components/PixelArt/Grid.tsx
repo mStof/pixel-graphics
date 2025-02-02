@@ -15,7 +15,7 @@ const Grid = ({ width, height }: GridType) => {
         key={i}
         p1={{ x: (width / 16) * i, y: 0 }}
         p2={{ x: (width / 16) * i, y: height }}
-        color={(width / 16) * i === width ? "transparent" : "blue"}
+        color={(width / 16) * i === width ? "transparent" : "rgba(0, 0, 0, 0.15)"}
       />
     );
   }
@@ -26,7 +26,7 @@ const Grid = ({ width, height }: GridType) => {
         key={i}
         p1={{ y: (height / 16) * i, x: 0 }}
         p2={{ y: (height / 16) * i, x: width }}
-        color={(height / 16) * i === height ? "transparent" : "blue"}
+        color={(height / 16) * i === height ? "transparent" : "rgba(0, 0, 0, 0.15)"}
       />
     );
   }
