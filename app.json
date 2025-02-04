@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "my-expo-app",
-    "slug": "my-expo-app",
+    "name": "Pixel Graphics",
+    "slug": "pixel-graphics",
     "version": "1.0.0",
-    "scheme": "my-expo-app",
+    "scheme": "pixel-graphics",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -21,7 +21,8 @@
           ]
         }
       ],
-      "expo-asset"
+      "expo-asset",
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true,
@@ -44,11 +45,31 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#ffffff",
+        "permissions": [
+          "READ_EXTERNAL_STORAGE",
+          "WRITE_EXTERNAL_STORAGE"
+        ]
+      },
+      "package": "com.mstof.myexpoapp"
     },
     "androidStatusBar": {
       "translucent": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "6c9614c3-ae84-4998-8f47-a6a4154f72b1"
+      }
+    },
+    "build": {
+      "preview": {
+        "android": {
+          "buildType": "apk"
+        }
+      }
     }
   }
 }
