@@ -2,7 +2,7 @@
 import { router, Tabs } from "expo-router";
 
 import { TabBarIcon } from "../../components/TabBarIcon";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { AddIcon, HomeIcon, MenuIcon, SocialIcon } from "~/src/components/icons";
 
 export default function TabLayout() {
@@ -39,14 +39,26 @@ export default function TabLayout() {
         name="social"
         options={{
           title: "Tab One",
-          tabBarIcon: () => <TabBarIcon text="Social" icon={<SocialIcon />} />,
+          tabBarIcon: () => <TabBarIcon disable text="Social" icon={<SocialIcon />} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            Alert.alert("Essa opção não está disponivél no momento ");
+          },
         }}
       />
       <Tabs.Screen
         name="menu"
         options={{
           title: "Tab Two",
-          tabBarIcon: () => <TabBarIcon text="Menu" icon={<MenuIcon />} />,
+          tabBarIcon: () => <TabBarIcon disable text="Menu" icon={<MenuIcon />} />,
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            Alert.alert("Essa opção não está disponivél no momento ");
+          },
         }}
       />
     </Tabs>

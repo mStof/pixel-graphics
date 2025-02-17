@@ -22,14 +22,15 @@ const Form = () => {
   const { setImageConfig } = useImageConfig();
 
   const handleRealize = (data: any) => {
-    if (!data.uri) setError("uri", { type: "required", message: "Obrigatório" });
+
+    if (!data.uri) return setError("uri", { type: "required", message: "Obrigatório" });
     setImageConfig({
       height: Number(data.height),
       width: Number(data.width),
-      uri: data.uri,
+      uriConfig: data.uri,
       title: data.title,
     });
-    router.push({ pathname: "/Pixelart", params: data });
+    router.push("/Pixelart");
   };
 
   return (

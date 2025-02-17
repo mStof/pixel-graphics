@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import { AlphaType, ColorType, Skia, SkImage } from "@shopify/react-native-skia";
 import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
@@ -9,7 +10,7 @@ const GridColor = () => {
   const [status, requestPermission] = MediaLibrary.usePermissions();
   const [image, setImg] = useState<SkImage | null>(null);
   const { height, width } = useImageConfig();
-  const { uri } = useImageConfig();
+  const { uriConfig } = useImageConfig();
   const pHeight = height;
   const pWidth = width;
   const { line } = useLine();
@@ -18,12 +19,11 @@ const GridColor = () => {
 
   useEffect(() => {
     if (!status) requestPermission();
+
     const loadImg = async () => {
-      console.log("await image", uri);
-      const imageData = await Skia.Data.fromURI(uri);
+      const imageData = await Skia.Data.fromURI(uriConfig.uri);
       const image = Skia.Image.MakeImageFromEncoded(imageData);
       setImg(image);
-      console.log("loaded image");
     };
     loadImg();
   }, [status]);
@@ -33,7 +33,7 @@ const GridColor = () => {
     const realPixelY = image.height() / pHeight;
     for (let i = 0; i < pWidth; i++) {
       const pixelXRead = (realPixelX / 2) * (1 + i * 2);
-      const pixels = image.readPixels(pixelXRead, realPixelY * line + 1, {
+      const pixels = image.readPixels(pixelXRead, (realPixelY/2) * line, {
         colorType: ColorType.RGBA_8888,
         alphaType: AlphaType.Premul,
         height: 1,

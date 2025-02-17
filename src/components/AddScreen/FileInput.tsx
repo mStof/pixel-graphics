@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import React from "react";
+import React, { useState } from "react";
 import {
   FieldError,
   FieldErrorsImpl,
@@ -35,6 +35,7 @@ const FileInput = ({
   error = "",
 }: FileInputProps) => {
   useNunito();
+  const [imgName, setImgName] = useState<string | null | undefined>(null);
   const { setValue, clearErrors } = setForm;
   const fileHandle = async () => {
     try {
@@ -44,7 +45,9 @@ const FileInput = ({
         selectionLimit: 1,
       });
       if (result.canceled) return console.log("Image Library cancelled");
-      setValue(formProps.name, result.assets[0].uri);
+      setImgName(result.assets[0].fileName);
+      const { uri, width, height, fileName } = result.assets[0];
+      setValue(formProps.name, { uri, width, height, fileName });
       clearErrors(formProps.name);
     } catch (err) {
       console.warn(err);
@@ -56,8 +59,10 @@ const FileInput = ({
       <Text className="font-Nunito-light text-xl leading-normal text-text">{title}</Text>
       <TouchableOpacity
         onPress={fileHandle}
-        className="flex h-15 flex-col items-center justify-center rounded-md bg-secondary ">
-        <Text className="font-Nunito-light text-xl text-text opacity-65">{placeholder}</Text>
+        className="flex h-15 flex-col items-center justify-center rounded-md bg-secondary  ">
+        <Text className="font-Nunito-light text-xl text-text opacity-65 px-4" numberOfLines={1}>
+          {imgName ? imgName : placeholder}
+        </Text>
       </TouchableOpacity>
       {error && <Text className="font-Nunito-bold text-xs text-red-800">{error.toString()}</Text>}
     </View>
