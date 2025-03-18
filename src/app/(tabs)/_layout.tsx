@@ -4,8 +4,10 @@ import { router, Tabs } from "expo-router";
 import { TabBarIcon } from "../../components/TabBarIcon";
 import { Alert, StyleSheet } from "react-native";
 import { AddIcon, HomeIcon, MenuIcon, SocialIcon } from "~/src/components/icons";
+import useNunito from "~/src/hooks/useNunito";
 
 export default function TabLayout() {
+    useNunito()
   return (
     <Tabs
       screenOptions={{

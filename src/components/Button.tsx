@@ -7,7 +7,7 @@ type ButtonProps = TouchableOpacityProps & {
 
 const Button = forwardRef<View, ButtonProps>(({ icon, ...TouchableOpacityProps }, ref) => {
   return (
-    <TouchableOpacity
+    <TouchableOpacity activeOpacity={0.5}
       ref={ref}
       className="flex h-fit items-center justify-center rounded-md bg-secondary px-6 py-3"
       {...TouchableOpacityProps}>

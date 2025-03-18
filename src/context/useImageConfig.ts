@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type ImageConfigProps = {
+export type ImageConfigProps = {
   title: string;
   uriConfig: {
     uri: string;

@@ -1,11 +1,13 @@
 /* eslint-disable import/order */
 import React, { useRef } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import Input from "./Input";
-import { useForm } from "react-hook-form";
-import FileInput from "./FileInput";
 import { router } from "expo-router";
+import { useForm } from "react-hook-form";
+
+import Input from "./Input";
+import FileInput from "./FileInput";
 import { useImageConfig } from "~/src/context/useImageConfig";
+import { useDatabase } from "~/src/database/useDatabase";
 
 const Form = () => {
   const {
@@ -21,16 +23,34 @@ const Form = () => {
   const heightRef = useRef<TextInput>(null);
   const { setImageConfig } = useImageConfig();
 
-  const handleRealize = (data: any) => {
+  const { addData, listData } = useDatabase();
 
-    if (!data.uri) return setError("uri", { type: "required", message: "Obrigatório" });
-    setImageConfig({
-      height: Number(data.height),
-      width: Number(data.width),
-      uriConfig: data.uri,
-      title: data.title,
-    });
-    router.push("/Pixelart");
+  const handleRealize = async (data: any) => {
+    try {
+      if (!data.uri.uri) return setError("uri", { type: "required", message: "Obrigatório" });
+      setImageConfig({
+        height: Number(data.height),
+        width: Number(data.width),
+        uriConfig: data.uri,
+        title: data.title,
+      });
+
+      await addData({
+        name: data.title,
+        image: data.uri.uri,
+        height_px: Number(data.height),
+        width_px: Number(data.width),
+        filename: data.uri.fileName,
+        real_height: data.uri.height,
+        real_width: data.uri.width,
+      });
+      const dataSQL = await listData();
+      console.log(dataSQL);
+
+      router.push("/Pixelart");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

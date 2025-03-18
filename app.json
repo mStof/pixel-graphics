@@ -55,6 +55,7 @@
       "supportsTablet": true
     },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
@@ -66,7 +67,9 @@
       "package": "com.mstof.myexpoapp"
     },
     "androidStatusBar": {
-      "translucent": true
+      "translucent": true,
+      "backgroundColor": "#B3C0E6"
+
     },
     "extra": {
       "router": {

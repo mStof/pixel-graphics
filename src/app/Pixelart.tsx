@@ -10,7 +10,10 @@ import { useBackHandler } from "@react-native-community/hooks";
 import { useImageConfig } from "../context/useImageConfig";
 
 export default function Pixelart() {
-  const { title } = useImageConfig();
+  const { title, setHeightPixels,setImageConfig,setWidthPixels, ...rest } = useImageConfig();
+
+  console.log("-------------------------------");
+  console.log("rest->", rest);
 
   useBackHandler(() => {
     router.push("/(tabs)");
