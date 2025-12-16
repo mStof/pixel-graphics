@@ -10,16 +10,17 @@ import { useDatabase } from "~/src/database/useDatabase";
 
 const CanvasControl = () => {
   const { line, setLine } = useLine();
-  const { height, width, setHeightPixels, setWidthPixels, id } = useImageConfig();
+  const {
+    image: { id, height, width },
+    setHeightPixels,
+    setWidthPixels,
+  } = useImageConfig();
   const { updateData } = useDatabase();
 
-  console.log(line);
-  
-
   const handleUpdate = async (type: "decrese" | "increse") => {
+    console.log("btn pressed");
     setLine(type === "increse" ? line + 1 : line - 1);
     try {
-      console.log(line, id);
       if (type === "decrese") return await updateData({ lines: line - 1, id });
       if (type === "increse") return await updateData({ lines: line + 2, id });
     } catch (error) {

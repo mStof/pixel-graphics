@@ -6,9 +6,9 @@ import { Alert, View } from "react-native";
 import Button from "../../Button";
 
 import { useImageConfig } from "~/src/context/useImageConfig";
+import { useLine } from "~/src/context/useLines";
 import { CardType } from "~/src/database/initDB";
 import { useDatabase } from "~/src/database/useDatabase";
-import { useLine } from "~/src/context/useLines";
 
 type ButtonProps = {
   cardSQL: CardType;

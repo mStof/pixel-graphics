@@ -9,7 +9,9 @@ type GridType = {
 };
 
 const Grid = ({ canvasWidth, canvasHeight }: GridType) => {
-  const { height, width, uriConfig } = useImageConfig();
+  const {
+    image: { height, width, uriConfig },
+  } = useImageConfig();
   const linesX = [];
   const linesY = [];
   const pixelX = width;

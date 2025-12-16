@@ -8,18 +8,17 @@ import { useLine } from "~/src/context/useLines";
 import { useImageConfig } from "~/src/context/useImageConfig";
 
 const CanvasArea = () => {
-  const config = useImageConfig();
+  const { image } = useImageConfig();
   const width = Dimensions.get("window").width - 64;
   const height = width;
-  const realPixel = height / Number(config.height);
+  const realPixel = height / Number(image.height);
   const { line } = useLine();
-  const pixles = useImageConfig();
 
   return (
     <>
       <View className="relative h-fit w-fit rounded-md bg-secondary">
         <Text className="absolute left-[77%] -translate-y-full font-Nunito-bold text-xs text-text">
-          {pixles.width}x{pixles.height}
+          {image.width}x{image.height}
         </Text>
         <Canvas style={{ width, height }}>
           <CanvasImage width={width} height={height} />

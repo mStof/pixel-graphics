@@ -1,5 +1,4 @@
 import { View, Text, DimensionValue } from "react-native";
-import React from "react";
 
 type ProgressProps = {
   value: number;

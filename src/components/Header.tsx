@@ -1,9 +1,8 @@
 import { Href, Link } from "expo-router";
-import { Text, View } from "react-native";
-import { ArrowIcon } from "./icons";
-import { Nunito_700Bold, useFonts } from "@expo-google-fonts/nunito";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { Text, View } from "react-native";
+
+import { ArrowIcon } from "./icons";
 import useNunito from "../hooks/useNunito";
 
 type HeaderProps = {

@@ -10,9 +10,11 @@ import { useBackHandler } from "@react-native-community/hooks";
 import { useImageConfig } from "../context/useImageConfig";
 
 const Pixelart = () => {
-  const { title } = useImageConfig();
+  const {
+    image: { title },
+  } = useImageConfig();
 
-console.log("Render")
+  console.log("Render pixel");
 
   useBackHandler(() => {
     router.push("/(tabs)");
@@ -30,6 +32,6 @@ console.log("Render")
       </SafeAreaView>
     </>
   );
-}
+};
 
 export default memo(Pixelart);

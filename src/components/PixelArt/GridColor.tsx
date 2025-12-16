@@ -9,8 +9,9 @@ import * as MediaLibrary from "expo-media-library";
 const GridColor = () => {
   const [status, requestPermission] = MediaLibrary.usePermissions();
   const [image, setImg] = useState<SkImage | null>(null);
-  const { height, width } = useImageConfig();
-  const { uriConfig } = useImageConfig();
+  const {
+    image: { height, width, uriConfig },
+  } = useImageConfig();
   const pHeight = height;
   const pWidth = width;
   const { line } = useLine();

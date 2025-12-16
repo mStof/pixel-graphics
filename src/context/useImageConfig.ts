@@ -1,26 +1,30 @@
-import { create } from "zustand"; 
-import { useShallow } from 'zustand/react/shallow'
+import { create } from "zustand";
+import { useShallow } from "zustand/react/shallow";
 
+type UriConfigProps = {
+  uri: string;
+  height: number;
+  width: number;
+  fileName: string;
+};
 
 export type ImageConfigProps = {
   id: number;
   title: string;
-  uriConfig: {
-    uri: string;
-    height: number;
-    width: number;
-    fileName: string;
-  };
+  uriConfig: UriConfigProps;
   height: number;
   width: number;
 };
-type UseImageConfigProps = ImageConfigProps & {
+
+type UseImageConfigProps = {
+  image: ImageConfigProps;
   setImageConfig: (imageConfig: ImageConfigProps) => void;
   setWidthPixels: (mode: "increse" | "decrese") => void;
   setHeightPixels: (mode: "increse" | "decrese") => void;
+  reset: () => void;
 };
 
-export const useImageConfig = create<UseImageConfigProps>((set) => ({
+const initialState: ImageConfigProps = {
   id: 0,
   title: "",
   uriConfig: {
@@ -31,20 +35,36 @@ export const useImageConfig = create<UseImageConfigProps>((set) => ({
   },
   height: 0,
   width: 0,
-  setImageConfig: (img) =>
-    set(() => ({
-      id: img.id,
-      height: img.height,
-      width: img.width,
-      title: img.title,
-      uriConfig: img.uriConfig,
-    })),
+};
+
+// export const useImageConfig = create<ImageConfigProps>(() => initialState);
+// type setImageConfigType = typeof useImageConfig.setState;
+// export const setImageConfig: setImageConfigType = (nextState) => {
+//   useImageConfig.setState(nextState);
+// };
+
+export const useImageConfig = create<UseImageConfigProps>((set) => ({
+  image: initialState,
+  setImageConfig: (img) => {
+    set((state) => ({ image: { ...state.image, id: img.id } }));
+    set((state) => ({ image: { ...state.image, height: img.height } }));
+    set((state) => ({ image: { ...state.image, title: img.title } }));
+    set((state) => ({ image: { ...state.image, width: img.width } }));
+    set((state) => ({ image: { ...state.image, uriConfig: img.uriConfig } }));
+  },
   setWidthPixels: (mode) =>
     set((state) => ({
-      width: mode === "increse" ? state.width + 1 : state.width - 1,
+      image: {
+        ...state.image,
+        width: mode === "increse" ? state.image.width + 1 : state.image.width - 1,
+      },
     })),
   setHeightPixels: (mode) =>
     set((state) => ({
-      height: mode === "increse" ? state.height + 1 : state.height - 1,
+      image: {
+        ...state.image,
+        height: mode === "increse" ? state.image.height + 1 : state.image.height - 1,
+      },
     })),
+  reset: () => set({ image: initialState }),
 }));

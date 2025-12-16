@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import Input from "./Input";
 import FileInput from "./FileInput";
-import { useImageConfig } from "~/src/context/useImageConfig";
+import { setImageConfig, useImageConfig } from "~/src/context/useImageConfig";
 import { useLine } from "~/src/context/useLines";
 import { useDatabase } from "~/src/database/useDatabase";
 
@@ -22,7 +22,7 @@ const Form = () => {
 
   const widthRef = useRef<TextInput>(null);
   const heightRef = useRef<TextInput>(null);
-  const { setImageConfig } = useImageConfig();
+
   const { setLine } = useLine();
 
   const { addData, listData } = useDatabase();
@@ -50,7 +50,7 @@ const Form = () => {
         uriConfig: data.uri,
         title: data.title,
       });
-      setLine(0)
+      setLine(0);
       router.push("/Pixelart");
     } catch (error) {
       console.log(error);

@@ -11,7 +11,9 @@ type CanvasImageProps = {
 
 const CanvasImage = ({ width, height }: CanvasImageProps) => {
   const [status, requestPermission] = MediaLibrary.usePermissions();
-  const { uriConfig } = useImageConfig();
+  const {
+    image: { uriConfig },
+  } = useImageConfig();
   const [img, setImg] = useState<SkImage | null>(null);
 
   useEffect(() => {
