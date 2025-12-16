@@ -18,7 +18,6 @@ const CardList = ({ search }: { search: string }) => {
     const dataCards = async () => {
       const response = await listData();
       setCardList(response);
-      console.log("->", cardList);
     };
     dataCards();
   }, []);
@@ -28,7 +27,6 @@ const CardList = ({ search }: { search: string }) => {
     const dataCards = async () => {
       const response = await listData();
       setCardList(response);
-      console.log("callback->", cardList);
       setRefreshing(false);
     };
     dataCards();
@@ -73,7 +71,7 @@ const CardList = ({ search }: { search: string }) => {
                   value={
                     isNaN((100 * item.lines) / item.real_height)
                       ? 0
-                      : (100 * item.lines) / item.real_height
+                      : 100 * item.lines / item.height_px
                   }
                 />
               </View>

@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
@@ -9,11 +9,10 @@ import { router } from "expo-router";
 import { useBackHandler } from "@react-native-community/hooks";
 import { useImageConfig } from "../context/useImageConfig";
 
-export default function Pixelart() {
-  const { title, setHeightPixels,setImageConfig,setWidthPixels, ...rest } = useImageConfig();
+const Pixelart = () => {
+  const { title } = useImageConfig();
 
-  console.log("-------------------------------");
-  console.log("rest->", rest);
+console.log("Render")
 
   useBackHandler(() => {
     router.push("/(tabs)");
@@ -32,3 +31,5 @@ export default function Pixelart() {
     </>
   );
 }
+
+export default memo(Pixelart);

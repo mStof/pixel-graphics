@@ -33,7 +33,8 @@ const GridColor = () => {
     const realPixelY = image.height() / pHeight;
     for (let i = 0; i < pWidth; i++) {
       const pixelXRead = (realPixelX / 2) * (1 + i * 2);
-      const pixels = image.readPixels(pixelXRead, (realPixelY/2) * line, {
+      const pixelYRead = (realPixelY / 2) * (1 + line * 2);
+      const pixels = image.readPixels(pixelXRead, pixelYRead, {
         colorType: ColorType.RGBA_8888,
         alphaType: AlphaType.Premul,
         height: 1,
@@ -65,7 +66,7 @@ const GridColor = () => {
                 return (
                   <View
                     key={colorIndex}
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: color, elevation: 1 }}
                     className="size-8 rounded-[0.25rem]"
                   />
                 );

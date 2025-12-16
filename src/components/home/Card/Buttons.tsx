@@ -8,6 +8,7 @@ import Button from "../../Button";
 import { useImageConfig } from "~/src/context/useImageConfig";
 import { CardType } from "~/src/database/initDB";
 import { useDatabase } from "~/src/database/useDatabase";
+import { useLine } from "~/src/context/useLines";
 
 type ButtonProps = {
   cardSQL: CardType;
@@ -15,14 +16,16 @@ type ButtonProps = {
 };
 const Buttons = ({ cardSQL, refresh }: ButtonProps) => {
   const { setImageConfig } = useImageConfig();
-  const { height_px, width_px, name, image, real_height, real_width, filename } = cardSQL;
+  const { setLine } = useLine();
+  const { height_px, width_px, name, image, real_height, real_width, filename, id, lines } =
+    cardSQL;
   const { deleteData } = useDatabase();
 
   const handleDelete = async () => {
-    Alert.alert(`Deleting card with id: ${cardSQL.id}`, "Quer mesmo deletar o card?", [
+    Alert.alert(`Deletar o card ${cardSQL.name}`, "Quer mesmo deletar o card?", [
       {
         text: "Deletar",
-        style: "cancel",
+        style: "destructive",
         onPress: async () => {
           try {
             await deleteData(cardSQL.id);
@@ -33,18 +36,25 @@ const Buttons = ({ cardSQL, refresh }: ButtonProps) => {
           }
         },
       },
+      {
+        text: "Cancelar",
+        style: "cancel",
+        onPress: async () => {},
+      },
     ]);
   };
-  console.log("cardSQL: ");
-  console.log(cardSQL);
 
   const handleEnter = () => {
     setImageConfig({
+      id,
       height: height_px,
       width: width_px,
       uriConfig: { fileName: filename, uri: image, height: real_height, width: real_width },
       title: name,
     });
+    console.log("lines->", lines);
+
+    setLine(lines - 1);
     router.push("/Pixelart");
   };
 

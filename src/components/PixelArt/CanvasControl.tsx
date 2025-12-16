@@ -1,19 +1,35 @@
 /* eslint-disable import/order */
-import React from "react";
+import React, { memo } from "react";
 import { View } from "react-native";
 import { LeftArrow, RightArrow } from "../icons";
 import { useLine } from "~/src/context/useLines";
 import { useImageConfig } from "~/src/context/useImageConfig";
 import Button from "../Button";
 import Entypo from "@expo/vector-icons/Entypo";
+import { useDatabase } from "~/src/database/useDatabase";
 
 const CanvasControl = () => {
   const { line, setLine } = useLine();
-  const { height, width, setHeightPixels, setWidthPixels } = useImageConfig();
+  const { height, width, setHeightPixels, setWidthPixels, id } = useImageConfig();
+  const { updateData } = useDatabase();
+
+  console.log(line);
+  
+
+  const handleUpdate = async (type: "decrese" | "increse") => {
+    setLine(type === "increse" ? line + 1 : line - 1);
+    try {
+      console.log(line, id);
+      if (type === "decrese") return await updateData({ lines: line - 1, id });
+      if (type === "increse") return await updateData({ lines: line + 2, id });
+    } catch (error) {
+      console.error("Error updating data:", error);
+    }
+  };
 
   return (
     <View className="mb-8 mt-auto flex w-full flex-row justify-between px-8">
-      <Button icon={<LeftArrow />} onPress={() => line > 0 && setLine("decrese")} />
+      <Button icon={<LeftArrow />} onPress={() => line > 0 && handleUpdate("decrese")} />
       <View className="bg-red-500">
         <Button
           icon={<Entypo name="plus" size={16} />}
@@ -38,9 +54,9 @@ const CanvasControl = () => {
           onPress={() => width > 1 && setHeightPixels("decrese")}
         />
       </View>
-      <Button icon={<RightArrow />} onPress={() => line + 1 < height && setLine("increse")} />
+      <Button icon={<RightArrow />} onPress={() => line + 1 < height && handleUpdate("increse")} />
     </View>
   );
 };
 
-export default CanvasControl;
+export default memo(CanvasControl);

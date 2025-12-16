@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import Input from "./Input";
 import FileInput from "./FileInput";
 import { useImageConfig } from "~/src/context/useImageConfig";
+import { useLine } from "~/src/context/useLines";
 import { useDatabase } from "~/src/database/useDatabase";
 
 const Form = () => {
@@ -22,20 +23,15 @@ const Form = () => {
   const widthRef = useRef<TextInput>(null);
   const heightRef = useRef<TextInput>(null);
   const { setImageConfig } = useImageConfig();
+  const { setLine } = useLine();
 
   const { addData, listData } = useDatabase();
 
   const handleRealize = async (data: any) => {
     try {
       if (!data.uri.uri) return setError("uri", { type: "required", message: "Obrigatório" });
-      setImageConfig({
-        height: Number(data.height),
-        width: Number(data.width),
-        uriConfig: data.uri,
-        title: data.title,
-      });
 
-      await addData({
+      const id = await addData({
         name: data.title,
         image: data.uri.uri,
         height_px: Number(data.height),
@@ -46,7 +42,15 @@ const Form = () => {
       });
       const dataSQL = await listData();
       console.log(dataSQL);
-
+      if (!id) return;
+      setImageConfig({
+        id: id?.thisId,
+        height: Number(data.height),
+        width: Number(data.width),
+        uriConfig: data.uri,
+        title: data.title,
+      });
+      setLine(0)
       router.push("/Pixelart");
     } catch (error) {
       console.log(error);

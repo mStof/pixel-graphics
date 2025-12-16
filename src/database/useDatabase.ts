@@ -51,5 +51,18 @@ export const useDatabase = () => {
     }
   };
 
-  return { addData, listData, deleteData };
+  const updateData = async (data: { lines: number; id: number }) => {
+    try {
+      const query = await db.prepareAsync("UPDATE userCards SET lines = $lines WHERE id = $id");
+      const result = query.executeAsync({
+        $lines: data.lines,
+        $id: data.id,
+      });
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { addData, listData, deleteData, updateData };
 };

@@ -1,6 +1,9 @@
-import { create } from "zustand";
+import { create } from "zustand"; 
+import { useShallow } from 'zustand/react/shallow'
+
 
 export type ImageConfigProps = {
+  id: number;
   title: string;
   uriConfig: {
     uri: string;
@@ -18,6 +21,7 @@ type UseImageConfigProps = ImageConfigProps & {
 };
 
 export const useImageConfig = create<UseImageConfigProps>((set) => ({
+  id: 0,
   title: "",
   uriConfig: {
     uri: "",
@@ -29,6 +33,7 @@ export const useImageConfig = create<UseImageConfigProps>((set) => ({
   width: 0,
   setImageConfig: (img) =>
     set(() => ({
+      id: img.id,
       height: img.height,
       width: img.width,
       title: img.title,

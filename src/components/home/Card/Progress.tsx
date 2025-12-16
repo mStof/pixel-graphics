@@ -13,7 +13,7 @@ const Progress = ({ value = 50 }: ProgressProps) => {
       <View className="h-1.5 w-28 overflow-hidden rounded-full bg-[#929CBB]">
         <View className="h-full bg-secondary" style={{ width: progressNum }} />
       </View>
-      <Text className="font-Nunito-light text-xs leading-tight text-text">{value}%</Text>
+      <Text className="font-Nunito-light text-xs leading-tight text-text">{value.toFixed(0)}%</Text>
     </View>
   );
 };
