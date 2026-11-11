@@ -3,33 +3,31 @@ import { RefreshControl, ScrollView, View } from "react-native";
 
 import { Card } from "./Card";
 
-import { CardType } from "~/src/database/initDB";
-import { useDatabase } from "~/src/database/useDatabase";
+import { useDatabase } from "~/src/hooks/useDatabase";
+import { PixelartType } from "~/src/types/pixelart";
 
 const CardList = ({ search }: { search: string }) => {
-  const [cardList, setCardList] = useState<CardType[] | undefined>([]);
+  const [cardList, setCardList] = useState<PixelartType[] | undefined>([]);
   const [refreshing, setRefreshing] = useState(false);
-  const { listData } = useDatabase();
+  const { getUserPixelart } = useDatabase();
   const filterList = cardList?.filter(({ name }) => {
     return name.toLowerCase().includes(search.toLowerCase());
   });
 
+  const dataCards = async () => {
+    const response = await getUserPixelart("0001");
+    const arrayResponse = Object.values(response);
+    setCardList(arrayResponse as PixelartType[]);
+  };
+
   useEffect(() => {
-    const dataCards = async () => {
-      const response = await listData();
-      setCardList(response);
-    };
     dataCards();
   }, []);
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    const dataCards = async () => {
-      const response = await listData();
-      setCardList(response);
-      setRefreshing(false);
-    };
-    dataCards();
+    await dataCards();
+    setRefreshing(false);
   }, []);
 
   return (
@@ -41,11 +39,11 @@ const CardList = ({ search }: { search: string }) => {
           colors={["#B3C0E6", "#030027", "#FAF4C5"]}
         />
       }
-      className="flex-1 px-4 pt-6"
+      className="flex-1 bg-primary px-4 pt-6"
       contentContainerClassName="gap-4">
       {search
-        ? filterList?.map((item) => (
-            <Card.Container key={item.id}>
+        ? filterList?.map((item, index) => (
+            <Card.Container key={index}>
               <Card.Image uri={item.image} />
               <View className="flex flex-1 justify-between">
                 <Card.Title>{item.name}</Card.Title>
@@ -58,11 +56,11 @@ const CardList = ({ search }: { search: string }) => {
                   }
                 />
               </View>
-              <Card.Buttons cardSQL={item} refresh={onRefresh} />
+              <Card.Buttons refresh={onRefresh} />
             </Card.Container>
           ))
-        : cardList?.map((item) => (
-            <Card.Container key={item.id}>
+        : cardList?.map((item, index) => (
+            <Card.Container key={index}>
               <Card.Image uri={item.image} />
               <View className="flex flex-1 justify-between">
                 <Card.Title>{item.name}</Card.Title>
@@ -75,7 +73,7 @@ const CardList = ({ search }: { search: string }) => {
                   }
                 />
               </View>
-              <Card.Buttons cardSQL={item} refresh={onRefresh} />
+              <Card.Buttons refresh={onRefresh} />
             </Card.Container>
           ))}
     </ScrollView>

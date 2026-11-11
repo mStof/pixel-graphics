@@ -1,5 +1,4 @@
 import { Text } from "react-native";
-import React from "react";
 
 const Title = ({ children }: { children: string }) => {
   return (

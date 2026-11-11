@@ -1,9 +1,6 @@
 import { View, Image } from "react-native";
-import React from "react";
 
-type ImageCProps = {
-  uri: string;
-};
+type ImageCProps = { uri: string };
 
 const ImageC = ({ uri }: ImageCProps) => {
   return (

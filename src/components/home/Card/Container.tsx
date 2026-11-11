@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from "react-native";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
+import { View, StyleSheet } from "react-native";
 
 const Container = ({ children }: { children: ReactNode }) => {
   return (

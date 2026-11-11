@@ -1,69 +1,59 @@
 /* eslint-disable import/order */
-import { router, Tabs } from "expo-router";
+import { NativeTabs } from "expo-router/native-tabs";
+import { StatusBar } from "expo-status-bar";
 
-import { TabBarIcon } from "../../components/TabBarIcon";
 import { Alert, StyleSheet } from "react-native";
-import { AddIcon, HomeIcon, MenuIcon, SocialIcon } from "~/src/components/icons";
 import useNunito from "~/src/hooks/useNunito";
+import { router } from "expo-router";
 
 export default function TabLayout() {
+  const handleRouterAdd = () => {
+    router.push("/Add");
+  };
+
+  const handleRouterDisabled = () => {
+    Alert.alert("Essa opção não está disponivél no OIIII ");
+  };
   useNunito();
   return (
-    <Tabs
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: "black",
-        tabBarShowLabel: false,
-        tabBarStyle: { ...style.tabBar },
-        tabBarItemStyle: { ...style.tabBarItem },
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Tab One",
-          tabBarIcon: () => <TabBarIcon text="Home" icon={<HomeIcon />} />,
+    <>
+      <StatusBar style="dark" />
+      <NativeTabs
+        backgroundColor="#B3C0E6"
+        labelVisibilityMode="labeled"
+        labelStyle={{
+          fontFamily: "Nunito_300Light",
+          fontSize: 12,
+          fontWeight: "light",
         }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: "Tab One",
-          tabBarIcon: () => <TabBarIcon text="Add" icon={<AddIcon />} />,
-        }}
-        listeners={{
-          tabPress: (e) => {
-            e.preventDefault();
-            router.push("/Add");
-          },
-        }}
-      />
-      <Tabs.Screen
-        name="social"
-        options={{
-          title: "Tab One",
-          tabBarIcon: () => <TabBarIcon disable text="Social" icon={<SocialIcon />} />,
-        }}
-        listeners={{
-          tabPress: (e) => {
-            e.preventDefault();
-            Alert.alert("Essa opção não está disponivél no OIIII ");
-          },
-        }}
-      />
-      <Tabs.Screen
-        name="menu"
-        options={{
-          title: "Tab Two",
-          tabBarIcon: () => <TabBarIcon disable text="Menu" icon={<MenuIcon />} />,
-        }}
-        listeners={{
-          tabPress: (e) => {
-            e.preventDefault();
-            Alert.alert("Essa opção não está disponivél no momento ");
-          },
-        }}
-      />
-    </Tabs>
+        // screenOptions={{
+        //   headerShown: false,
+        //   tabBarActiveTintColor: "black",
+        //   tabBarShowLabel: false,
+        //   tabBarStyle: { ...style.tabBar },
+        //   tabBarItemStyle: { ...style.tabBarItem },
+      >
+        <NativeTabs.Trigger name="index">
+          <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon md="home" />
+        </NativeTabs.Trigger>
+
+        <NativeTabs.Trigger name="two" listeners={{ tabPress: handleRouterAdd }}>
+          <NativeTabs.Trigger.Label>Add</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon md="add" />
+        </NativeTabs.Trigger>
+
+        <NativeTabs.Trigger disabled name="social" listeners={{ tabPress: handleRouterDisabled }}>
+          <NativeTabs.Trigger.Label>Social</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon md="people" selectedColor="#fff" />
+        </NativeTabs.Trigger>
+
+        <NativeTabs.Trigger disabled name="menu" listeners={{ tabPress: handleRouterDisabled }}>
+          <NativeTabs.Trigger.Label>Menu</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Icon md="menu" selectedColor="#fff" />
+        </NativeTabs.Trigger>
+      </NativeTabs>
+    </>
   );
 }
 

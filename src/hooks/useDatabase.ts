@@ -1,4 +1,4 @@
-import { getDatabase, ref, set } from "firebase/database";
+import { child, get, getDatabase, ref, set } from "firebase/database";
 
 import { app } from "../service/firebase";
 import { PixelartType } from "../types/pixelart";
@@ -20,8 +20,19 @@ export const useDatabase = () => {
     }
   };
 
+  const getUserPixelart = async (id: string) => {
+    const query = child(ref(db), `users/${id}/pixelarts`);
+    try {
+      const data = await get(query);
+      if (!data.exists()) throw new Error("Nenhum dado encontrado");
+      return data.val();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const addDataPixelart = async (userId: any, value: PixelartType) => {
-    const reference = ref(db, `user/${userId}/pixelarts/${Date.now()}`);
+    const reference = ref(db, `users/${userId}/pixelarts/${Date.now()}`);
     try {
       await set(reference, value);
       return true;
@@ -34,5 +45,6 @@ export const useDatabase = () => {
   return {
     addDataUser,
     addDataPixelart,
+    getUserPixelart,
   };
 };
