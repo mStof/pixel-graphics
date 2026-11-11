@@ -9,7 +9,6 @@ type UriConfigProps = {
 };
 
 export type ImageConfigProps = {
-  id: number;
   title: string;
   uriConfig: UriConfigProps;
   height: number;
@@ -25,7 +24,6 @@ type UseImageConfigProps = {
 };
 
 const initialState: ImageConfigProps = {
-  id: 0,
   title: "",
   uriConfig: {
     uri: "",
@@ -46,11 +44,15 @@ const initialState: ImageConfigProps = {
 export const useImageConfig = create<UseImageConfigProps>((set) => ({
   image: initialState,
   setImageConfig: (img) => {
-    set((state) => ({ image: { ...state.image, id: img.id } }));
-    set((state) => ({ image: { ...state.image, height: img.height } }));
-    set((state) => ({ image: { ...state.image, title: img.title } }));
-    set((state) => ({ image: { ...state.image, width: img.width } }));
-    set((state) => ({ image: { ...state.image, uriConfig: img.uriConfig } }));
+    set((state) => ({
+      image: {
+        ...state.image,
+        uriConfig: img.uriConfig,
+        width: img.width,
+        title: img.title,
+        height: img.height,
+      },
+    }));
   },
   setWidthPixels: (mode) =>
     set((state) => ({

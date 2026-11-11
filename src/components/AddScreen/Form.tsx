@@ -6,9 +6,9 @@ import { useForm } from "react-hook-form";
 
 import Input from "./Input";
 import FileInput from "./FileInput";
-import { setImageConfig, useImageConfig } from "~/src/context/useImageConfig";
+import { useImageConfig } from "~/src/context/useImageConfig";
 import { useLine } from "~/src/context/useLines";
-import { useDatabase } from "~/src/database/useDatabase";
+import { useDatabase } from "~/src/hooks/useDatabase";
 
 const Form = () => {
   const {
@@ -25,13 +25,16 @@ const Form = () => {
 
   const { setLine } = useLine();
 
-  const { addData, listData } = useDatabase();
+  const { setImageConfig } = useImageConfig();
+
+  const { addDataPixelart } = useDatabase();
 
   const handleRealize = async (data: any) => {
     try {
       if (!data.uri.uri) return setError("uri", { type: "required", message: "Obrigatório" });
 
-      const id = await addData({
+      const boolResult = await addDataPixelart("0001", {
+        lines: 0,
         name: data.title,
         image: data.uri.uri,
         height_px: Number(data.height),
@@ -40,18 +43,15 @@ const Form = () => {
         real_height: data.uri.height,
         real_width: data.uri.width,
       });
-      const dataSQL = await listData();
-      console.log(dataSQL);
-      if (!id) return;
       setImageConfig({
-        id: id?.thisId,
         height: Number(data.height),
         width: Number(data.width),
         uriConfig: data.uri,
         title: data.title,
       });
       setLine(0);
-      router.push("/Pixelart");
+
+      if (boolResult) router.push("/Pixelart");
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +71,7 @@ const Form = () => {
         }}
         textInputProps={{
           placeholder: "My cool pixel art ;)",
-          onSubmitEditing: () => widthRef.current?.focus(),
+          onSubmitEditing: () => widthRef.current?.State.focusTextInput,
           returnKeyType: "next",
         }}
       />
@@ -102,7 +102,7 @@ const Form = () => {
               inputMode: "numeric",
               textAlign: "center",
               className: "!pl-0",
-              onSubmitEditing: () => heightRef.current?.focus(),
+              onSubmitEditing: () => heightRef.current?.State.focusTextInput,
               returnKeyType: "next",
             }}
           />
@@ -128,7 +128,7 @@ const Form = () => {
       </View>
       <View className="mb-8 mt-auto px-4">
         <TouchableOpacity
-          onPress={handleSubmit(handleRealize)}
+          onPress={() => handleSubmit(handleRealize)()}
           className=" flex h-15 flex-col items-center justify-center rounded-lg bg-secondary ">
           <Text className="font-Nunito-light text-xl text-text">Confirm</Text>
         </TouchableOpacity>

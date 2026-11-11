@@ -7,7 +7,7 @@ import { AddIcon, HomeIcon, MenuIcon, SocialIcon } from "~/src/components/icons"
 import useNunito from "~/src/hooks/useNunito";
 
 export default function TabLayout() {
-    useNunito()
+  useNunito();
   return (
     <Tabs
       screenOptions={{
@@ -46,7 +46,7 @@ export default function TabLayout() {
         listeners={{
           tabPress: (e) => {
             e.preventDefault();
-            Alert.alert("Essa opção não está disponivél no momento ");
+            Alert.alert("Essa opção não está disponivél no OIIII ");
           },
         }}
       />
